@@ -76,6 +76,6 @@ get plugin's description file(plugin.yml) array, key of array is same as plugin.
 플러그인의 설명 파일(plugin.yml) 의 배열을 반환합니다. 배열의 키값은 plugin.yml 의 키값과 동일합니다.
 
 # Download
-[http://github.com/itstake/CHPluginManager/releases Click Here]
+[Click Here](http://github.com/itstake/CHPluginManager/releases)
 
 
