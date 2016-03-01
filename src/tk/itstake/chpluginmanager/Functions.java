@@ -5,6 +5,8 @@ import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.annotations.api;
 import com.laytonsmith.core.constructs.*;
 import com.laytonsmith.core.environments.Environment;
+import com.laytonsmith.core.exceptions.CRE.CREInvalidPluginException;
+import com.laytonsmith.core.exceptions.CRE.CREThrowable;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
 import com.laytonsmith.core.functions.Exceptions;
@@ -29,9 +31,12 @@ public class Functions {
     @api
     public static class disable_plugin extends AbstractFunction {
 
+
         @Override
-        public Exceptions.ExceptionType[] thrown() {
-            return new Exceptions.ExceptionType[]{Exceptions.ExceptionType.InvalidPluginException};
+        public Class<? extends CREThrowable>[] thrown() {
+            return new Class[] {
+                    CREInvalidPluginException.class
+            };
         }
 
         @Override
@@ -50,7 +55,7 @@ public class Functions {
                 pluginManager.disablePlugin(Bukkit.getPluginManager().getPlugin(args[0].getValue()));
                 return CVoid.VOID;
             } else {
-                throw new ConfigRuntimeException("That plugin is not exist", Exceptions.ExceptionType.InvalidPluginException, t);
+                throw new CREInvalidPluginException("That plugin is not exist", t);
             }
         }
 
@@ -79,8 +84,9 @@ public class Functions {
     public static class plugin_is_enabled extends AbstractFunction {
 
         @Override
-        public Exceptions.ExceptionType[] thrown() {
-            return new Exceptions.ExceptionType[0];
+        public Class<? extends CREThrowable>[] thrown() {
+            return new Class[] {
+            };
         }
 
         @Override
@@ -127,8 +133,9 @@ public class Functions {
     public static class get_plugins extends AbstractFunction {
 
         @Override
-        public Exceptions.ExceptionType[] thrown() {
-            return new Exceptions.ExceptionType[0];
+        public Class<? extends CREThrowable>[] thrown() {
+            return new Class[] {
+            };
         }
 
         @Override
@@ -145,7 +152,7 @@ public class Functions {
         public Construct exec(Target t, Environment environment, Construct... args) throws ConfigRuntimeException {
             CArray plugins = new CArray(t);
             for(Plugin p:pluginManager.getPlugins()) {
-                plugins.push(new CString(p.getName(), t));
+                plugins.push(new CString(p.getName(), t), t);
             }
             return plugins;
         }
@@ -162,7 +169,7 @@ public class Functions {
 
         @Override
         public String docs() {
-            return "array {} get all plugins array(includes disabled plugin)";
+            return "array {} get all plugin's array(includes disabled plugin)";
         }
 
         @Override
@@ -175,8 +182,10 @@ public class Functions {
     public static class enable_plugin extends AbstractFunction {
 
         @Override
-        public Exceptions.ExceptionType[] thrown() {
-            return new Exceptions.ExceptionType[]{Exceptions.ExceptionType.InvalidPluginException};
+        public Class<? extends CREThrowable>[] thrown() {
+            return new Class[] {
+                    CREInvalidPluginException.class
+            };
         }
 
         @Override
@@ -203,10 +212,10 @@ public class Functions {
                     Bukkit.getPluginManager().enablePlugin(Bukkit.getPluginManager().getPlugin(args[0].getValue()));
                     return CVoid.VOID;
                 } else {
-                    throw new ConfigRuntimeException("That plugin is already enabled", Exceptions.ExceptionType.InvalidPluginException, t);
+                    throw new CREInvalidPluginException("That plugin is already enabled", t);
                 }
             } else {
-                throw new ConfigRuntimeException("That plugin is not exist", Exceptions.ExceptionType.InvalidPluginException, t);
+                throw new CREInvalidPluginException("That plugin is not exist", t);
             }
         }
 
@@ -235,8 +244,10 @@ public class Functions {
     public static class load_plugin extends AbstractFunction {
 
         @Override
-        public Exceptions.ExceptionType[] thrown() {
-            return new Exceptions.ExceptionType[]{Exceptions.ExceptionType.InvalidPluginException};
+        public Class<? extends CREThrowable>[] thrown() {
+            return new Class[] {
+                    CREInvalidPluginException.class
+            };
         }
 
         @Override
@@ -256,9 +267,9 @@ public class Functions {
                 pluginManager.loadPlugin(new File(pluginManager.getPlugin("CommandHelper").getDataFolder().getParentFile().toPath() + File.pathSeparator + fileName));
                 return CVoid.VOID;
             } catch (InvalidPluginException e) {
-                throw new ConfigRuntimeException("Invaild Plugin File", Exceptions.ExceptionType.InvalidPluginException, t);
+                throw new CREInvalidPluginException("Invaild Plugin File", t);
             } catch (InvalidDescriptionException e) {
-                throw new ConfigRuntimeException("Invaild Description File", Exceptions.ExceptionType.InvalidPluginException, t);
+                throw new CREInvalidPluginException("Invaild Description File", t);
             }
         }
 
@@ -287,8 +298,10 @@ public class Functions {
     public static class get_plugin_description extends AbstractFunction {
 
         @Override
-        public Exceptions.ExceptionType[] thrown() {
-            return new Exceptions.ExceptionType[]{Exceptions.ExceptionType.InvalidPluginException};
+        public Class<? extends CREThrowable>[] thrown() {
+            return new Class[] {
+                    CREInvalidPluginException.class
+            };
         }
 
         @Override
@@ -315,7 +328,7 @@ public class Functions {
             if(pluginObject != null) {
                 dFile = pluginObject.getDescription();
             } else {
-                throw new ConfigRuntimeException("That plugin is not exist", Exceptions.ExceptionType.InvalidPluginException, t);
+                throw new CREInvalidPluginException("That plugin is not exist", t);
             }
             dArray.set(new CString("name", t), new CString(dFile.getName(), t), t);
             dArray.set(new CString("main", t), new CString(dFile.getMain(), t), t);
@@ -329,7 +342,7 @@ public class Functions {
             if(dFile.getAuthors() != null) {
                 CArray authors = new CArray(t);
                 for(String author:dFile.getAuthors()) {
-                    authors.push(new CString(author, t));
+                    authors.push(new CString(author, t), t);
                 }
                 dArray.set(new CString("authors", t), authors, t);
             }
@@ -344,7 +357,7 @@ public class Functions {
             if(dFile.getDepend() != null) {
                 CArray depends = new CArray(t);
                 for(String depend:dFile.getDepend()) {
-                    depends.push(new CString(depend, t));
+                    depends.push(new CString(depend, t), t);
                 }
                 dArray.set(new CString("depend", t), depends, t);
             }
@@ -354,14 +367,14 @@ public class Functions {
             if(dFile.getSoftDepend() != null) {
                 CArray sdepends = new CArray(t);
                 for(String sdepend:dFile.getSoftDepend()) {
-                    sdepends.push(new CString(sdepend, t));
+                    sdepends.push(new CString(sdepend, t), t);
                 }
                 dArray.set(new CString("softdepend", t), sdepends, t);
             }
             if(dFile.getLoadBefore() != null) {
                 CArray loadBefores = new CArray(t);
                 for(String loadBefore:dFile.getLoadBefore()) {
-                    loadBefores.push(new CString(loadBefore, t));
+                    loadBefores.push(new CString(loadBefore, t), t);
                 }
                 dArray.set(new CString("loadbefore", t), loadBefores, t);
             }
@@ -377,7 +390,7 @@ public class Functions {
                     if(commandMap.keySet().contains("aliases") && commandMap.get("aliases") instanceof List && ((List<String>)commandMap.get("aliases")).size() > 0) {
                         CArray aliases = new CArray(t);
                         for(String alias:(List<String>)commandMap.get("aliases")) {
-                            aliases.push(new CString(alias, t));
+                            aliases.push(new CString(alias, t), t);
                         }
                         command.set(new CString("aliases", t), aliases, t);
                     }
@@ -448,7 +461,7 @@ public class Functions {
 
         @Override
         public String docs() {
-            return "array {PluginName} get plugin's description file(plugin.yml) array, It contains a key named ";
+            return "array {PluginName} get plugin's description file(plugin.yml) array, key of array is same as plugin.yml's key";
         }
 
         @Override

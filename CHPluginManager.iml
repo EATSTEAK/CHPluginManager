@@ -10,22 +10,22 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/commandhelper-3.3.1-SNAPSHOT.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/spigot.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/lib/commandhelper-3.3.1-SNAPSHOT.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/spigot.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/spigot.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/commandhelper-3.3.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/lib/spigot.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/commandhelper-3.3.2-SNAPSHOT.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

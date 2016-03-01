@@ -13,16 +13,16 @@ import org.bukkit.Bukkit;
 public class LifeCycles extends AbstractExtension {
     @Override
     public Version getVersion() {
-        return new SimpleVersion(1,0,0);
+        return new SimpleVersion(1,1,0);
     }
 
     @Override
     public void onStartup() {
-        Bukkit.getConsoleSender().sendMessage("[CHPluginManager] CHPluginManager 1.0.0 Enabled.");
+        Bukkit.getConsoleSender().sendMessage("[CHPluginManager] CHPluginManager 1.1.0 Enabled.");
     }
 
     @Override
     public void onShutdown() {
-        Bukkit.getConsoleSender().sendMessage("[CHPluginManager] CHPluginManager 1.0.0 Disabled.");
+        Bukkit.getConsoleSender().sendMessage("[CHPluginManager] CHPluginManager 1.1.0 Disabled.");
     }
 }
